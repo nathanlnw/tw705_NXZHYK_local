@@ -6,8 +6,8 @@
 // define to enable additional debugging functions
 //// #define LCD_DEBUG (1)
 
-#include <rtthread.h> 
-//#include <rtdevice.h>  
+#include <rtthread.h>
+//#include <rtdevice.h>
 #include <rthw.h>
 #include "stm32f2xx.h"
 #include "usart.h"
@@ -19,14 +19,14 @@
 #include  <stdio.h>
 #include  <string.h>
 #include  "App_moduleConfig.h"
-#include  "rtdevice.h "  
+#include  "rtdevice.h "
 
 
 
 
 #include <stdio.h>
 #include <rtthread.h>
-#include "stm32f2xx.h"  
+#include "stm32f2xx.h"
 #include "board.h"
 //#include "ringbuffer.h"
 #include "Device_printer.h"
@@ -68,7 +68,7 @@
 #define SCRN_RIGHT		121
 #define SCRN_BOTTOM		31
 
-/* SED1520 is used with reverse direction (ADC_REV). 
+/* SED1520 is used with reverse direction (ADC_REV).
    This value is the address of the leftmost column: */
 #define LCD_STARTCOL_REVERSE	19
 
@@ -79,7 +79,7 @@
 /* LCD function prototype list */
 /*    Close  Disp         -- add  by  nathan */
 
-extern u8	cByte;// 关闭背光 
+extern u8	cByte;// 关闭背光
 
 
 
@@ -87,9 +87,9 @@ extern void lcd_init(void);
 extern void lcd_out_dat(const unsigned char dat, const unsigned char nctrl);
 extern void lcd_out_ctl(const unsigned char cmd, const unsigned char nctrl);
 extern void lcd_fill(const unsigned char pattern);
-extern void lcd_fill_2(const unsigned char pattern,unsigned char Pag_start,unsigned char Pag_end,unsigned char Col_start,unsigned char col_end);
+extern void lcd_fill_2(const unsigned char pattern, unsigned char Pag_start, unsigned char Pag_end, unsigned char Col_start, unsigned char col_end);
 
-extern void lcd_fill_Page(const unsigned char pattern,unsigned char startpage,unsigned char endpage);
+extern void lcd_fill_Page(const unsigned char pattern, unsigned char startpage, unsigned char endpage);
 extern void lcd_erase(void);
 extern void lcd_update(const unsigned char top, const unsigned char bottom);
 extern void lcd_update_all(void);
@@ -111,9 +111,9 @@ extern void lcd_text_p(uint8_t left, uint8_t top, uint8_t font, const char *str)
 	lcd_text_p(lcdl_,lcdt_,lcdf_,PSTR(lcds_))
 
 extern void lcd_bitmap(const uint8_t left, const uint8_t top, const struct IMG_DEF *img_ptr, const uint8_t mode);
-extern void lcd_text12(char left,char top ,char *p,char len,const char mode);
-extern void lcd_text12_local(char left,char top ,char *p,char len,const char mode);
-extern void lcd_RstLow(void);  
+extern void lcd_text12(char left, char top , char *p, char len, const char mode);
+extern void lcd_text12_local(char left, char top , char *p, char len, const char mode);
+extern void lcd_RstLow(void);
 
 
 #ifdef LCD_DEBUG

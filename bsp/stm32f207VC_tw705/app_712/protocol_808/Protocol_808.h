@@ -660,13 +660,11 @@ typedef struct  _SYSConfig           //  name:  config
     u8       IP_Aux[4];   //   辅IP 地址 
     u16      Port_Aux;    //   辅socket  端口
     u8       DNSR[50];    //  DNSR 1  域名解析
-    u8       DNSR_Aux[50]; //   DNSR2   域名解析     
-	//  LINK2  Setting
-	u8		Link2_IP[4]; 
-	u16 	Link2_Port; 	   	
-    u16     AccOn_Dur;   //  ACC 开  上报间隔
-    u16     AccOff_Dur;  //   ACC 关  上报间隔
-    u8      TriggerSDsatus;  //  传感器触发上报状态	
+    u8       DNSR_Aux[50]; //   DNSR2   域名解析
+    //  LINK2  Setting
+    u8		Link2_IP[4];
+    u16 	Link2_Port;
+    u8      TriggerSDsatus;  //  传感器触发上报状态
     //-------- BD add-----------------
     u8      BD_IC_main_IP[4];  //  IC卡认证主服务器IP 地址
     u32     BD_IC_TCP_port;     //  IC 卡认证主服务器TCP 端口
@@ -718,6 +716,7 @@ typedef struct  _JT808Config   //name:  jt808
     u32  BD_CameraTakeByTime_Settings;   // 摄像头定时拍照开关    0 不允许1 允许 表13
     u32  BD_CameraTakeByDistance_Settings;  //  摄像头定距离拍照控制位
     u8   Close_CommunicateFlag;   // 关闭通信标志位    
+    u32  take_Duration;   // 定时拍照间隔
     u16     BD_GNSS;
 	
 
@@ -935,15 +934,20 @@ typedef struct _CAN_TRAN
 #ifdef AVRG15MIN
 
 //  停车前15 分钟 ，每分钟的平均速度
+#define   MAX_PERmin_NUM  25600     //  400 Page    1page=64    64*400=25600
+
+//  停车前15 分钟 ，每分钟的平均速度
 typedef struct  _Avrg15_SPD
 {
-	u8 write;
-	u8 read; // 停车前15 分钟平均速度记录
-	u8 content[105]; // 停车前15分钟平均速度
-	u8 Ram_counter;
-	u8 savefull_state; // 在ram 中存储的计数器   
-}AVRG15_SPD;
-//   停车前15  分钟，每分钟的平均速度  
+    u32 write;
+    u32 read; // 停车前15 分钟平均速度记录
+    u8  content[8]; // 停车前15分钟平均速度
+    u8  savefull_state; // 在ram 中存储的计数器
+    u8  seconds_counter; //  计时器
+    u32 spd_accumlate;  //  60 s  内的速度和
+    u8  reset_save;// 重启前存储平均速度
+} AVRG15_SPD;
+//   停车前15  分钟，每分钟的平均速度
 extern AVRG15_SPD  Avrg_15minSpd;
 #endif
 
@@ -1388,6 +1392,12 @@ extern void  Spd_Exp_Wr(void);
 
 
 
+#ifdef AVRG15MIN
+extern u8  Api_avrg15minSpd_Content_read(u8 *dest);
+extern u8  Avrg15_min_generate(u8 spd);
+extern void Averg15_min_timer_1s(void);
+extern u8  Api_15min_save_1_record(void);
+#endif
 
 
 #endif
