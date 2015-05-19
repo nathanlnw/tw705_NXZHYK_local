@@ -91,7 +91,7 @@ void rtthread_startup(void)
     {
         DF_delay_us(1000);
         /* Reload IWDG counter */
-        //IWDG_ReloadCounter();
+        //IWDG_ReloadCounter(); 
     }
 
 
